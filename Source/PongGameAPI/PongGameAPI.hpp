@@ -36,8 +36,6 @@ struct GlobalVariables {
 
     // Global Variables
     int32 gameMode;
-    int32 optionsLoaded;
-    int32 optionsRAM[0x80];
 };
 
 // Game Helpers

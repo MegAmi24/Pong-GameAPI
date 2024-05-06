@@ -5,6 +5,7 @@
 // ---------------------------------------------------------------------
 
 #include "Paddle.hpp"
+#include "Ball.hpp"
 
 using namespace RSDK;
 
@@ -12,7 +13,22 @@ namespace GameLogic
 {
 RSDK_REGISTER_OBJECT(Paddle);
 
-void Paddle::Update(void) {}
+void Paddle::Update(void)
+{
+    this->stateInput.Run(this);
+
+    if (this->up) {
+        this->position.y -= TO_FIXED(PADDLE_MOVESPEED);
+        if (FROM_FIXED(this->position.y) + sVars->hitbox.top < 0)
+            this->position.y = TO_FIXED(sVars->hitbox.bottom);
+    }
+    else if (this->down) {
+        this->position.y += TO_FIXED(PADDLE_MOVESPEED);
+        if (FROM_FIXED(this->position.y) + sVars->hitbox.bottom > screenInfo->size.y)
+            this->position.y = TO_FIXED(screenInfo->size.y + sVars->hitbox.top);
+    }
+}
+
 void Paddle::LateUpdate(void) {}
 void Paddle::StaticUpdate(void) {}
 
@@ -25,7 +41,7 @@ void Paddle::Draw(void)
 void Paddle::Create(void *data)
 {
     if (!sceneInfo->inEditor) {
-        this->active       = ACTIVE_ALWAYS;
+        this->active       = ACTIVE_NORMAL;
         this->visible      = true;
         this->drawGroup    = 2;
         this->playerID     = this->Slot();
@@ -33,17 +49,16 @@ void Paddle::Create(void *data)
         if (this->playerID == 0) {
             this->isAI        = false;
             this->paddleColor = 0xFF0000;
+            this->position.x  = TO_FIXED_F(72);
         }
         else {
             this->isAI        = globals->gameMode == MODE_VSAI;
             this->paddleColor = 0x0000FF;
+            this->position.x  = TO_FIXED_F(screenInfo->size.x - 72);
         }
+        this->position.y = TO_FIXED_F(screenInfo->center.y);
         this->stateInput.Set(this->isAI ? &Paddle::Input_AI : &Paddle::Input_Player);
-        this->hitbox.left   = -(PADDLE_WIDTH / 2);
-        this->hitbox.top    = -(PADDLE_HEIGHT / 2);
-        this->hitbox.right  = PADDLE_WIDTH / 2;
-        this->hitbox.bottom = PADDLE_HEIGHT / 2;
-        this->originPos     = this->position;
+        this->originPos = this->position;
     }
 }
 
@@ -53,16 +68,67 @@ void Paddle::StageLoad(void)
     int32 slotID = 0;
     foreach_all(Paddle, spawn)
     {
-        Paddle *paddle = RSDK_GET_ENTITY(slotID, Paddle);
-        spawn->Copy(paddle, true);
-        slotID++;
+        if (slotID < 2) {
+            Paddle *paddle = RSDK_GET_ENTITY(slotID, Paddle);
+            spawn->Copy(paddle, true);
+            slotID++;
+        }
+        else
+            spawn->Destroy(); // There should only be 2 paddles
+    }
+
+    sVars->hitbox.left   = -(PADDLE_WIDTH / 2);
+    sVars->hitbox.top    = -(PADDLE_HEIGHT / 2);
+    sVars->hitbox.right  = PADDLE_WIDTH / 2;
+    sVars->hitbox.bottom = PADDLE_HEIGHT / 2;
+}
+
+void Paddle::Input_Player(void)
+{
+    if (this->controllerID <= Input::CONT_P2) {
+        ControllerState *controller = &controllerInfo[this->controllerID];
+        AnalogState *stick          = &analogStickInfoL[this->controllerID];
+
+        this->up    = controller->keyUp.down;
+        this->down  = controller->keyDown.down;
+
+        this->up |= stick->keyUp.down;
+        this->down |= stick->keyDown.down;
+
+        this->up |= stick->vDelta > 0.3;
+        this->down |= stick->vDelta < -0.3;
+
+        if (this->up && this->down) {
+            this->up  = false;
+            this->down = false;
+        }
+
+        if (controller->keyStart.press && sceneInfo->state == ENGINESTATE_REGULAR) {
+            // Pause
+        }
     }
 }
 
-bool32 Paddle::CheckBallTouch(Paddle *paddle, void *ball, RSDK::Hitbox *ballHitbox) {}
-
-void Paddle::Input_Player(void) {}
-void Paddle::Input_AI(void) {}
+void Paddle::Input_AI(void)
+{
+    if (--this->aiTimer <= 0) {
+        if (this->up || this->down) {
+            this->up   = false;
+            this->down = false;
+        }
+        else {
+            Ball *ball = RSDK_GET_ENTITY(2, Ball);
+            bool32 checkPos = this->position.y < ball->position.y;
+            if (this->position.y == ball->position.y)
+                checkPos = ball->velocity.y > 0;
+            if (checkPos)
+                this->down = true;
+            else
+                this->up = true;
+        }
+        this->aiTimer = Math::Rand(10, 45);
+    }
+}
 
 #if GAME_INCLUDE_EDITOR
 void Paddle::EditorDraw(void)

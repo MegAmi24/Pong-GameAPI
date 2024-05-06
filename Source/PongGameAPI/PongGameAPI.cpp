@@ -17,6 +17,8 @@ void GlobalVariables::Init(void *g)
 {
     GlobalVariables *globals = (GlobalVariables *)g;
     memset(globals, 0, sizeof(GlobalVariables));
+
+    globals->gameMode = MODE_VSAI;
 }
 
 void InitModAPI(void) {}

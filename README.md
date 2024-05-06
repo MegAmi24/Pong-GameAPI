@@ -1,6 +1,8 @@
 # Pong GameAPI
 A simple Pong clone made to demonstrate the use of [GameAPI](https://github.com/Rubberduckycooly/GameAPI) for creating standalone games in the Retro Engine. This project also serves as a template for anyone looking to make their own games.
 
+Currently, there isn't much more to the game than endlessly playing against a basic AI, although I do plan to add a few extra features, such as a two-player mode.
+
 # How to build
 This repository assumes you are already familiar with [the building process for the RSDKv5(U) Decompilation](https://github.com/Rubberduckycooly/RSDKv5-Decompilation#how-to-build).
 

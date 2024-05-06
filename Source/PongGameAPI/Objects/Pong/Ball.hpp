@@ -2,15 +2,13 @@
 
 #include "PongGameAPI.hpp"
 
-#define PADDLE_WIDTH  (16)
-#define PADDLE_HEIGHT (64)
-
-#define PADDLE_MOVESPEED (5)
+#define BALL_RADIUS    (8)
+#define BALL_MOVESPEED (2)
 
 namespace GameLogic
 {
 
-struct Paddle : RSDK::GameObject::Entity {
+struct Ball : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -31,16 +29,6 @@ struct Paddle : RSDK::GameObject::Entity {
     // ==============================
     // INSTANCE VARS
     // ==============================
-    uint16 playerID;
-    int32 controllerID;
-    bool32 isAI;
-    RSDK::StateMachine<Paddle> stateInput;
-    color paddleColor;
-    RSDK::Vector2 originPos;
-    bool32 up;
-    bool32 down;
-    int32 aiTimer;
-    int8 aiDirection;
 
     // ==============================
     // EVENTS
@@ -67,14 +55,10 @@ struct Paddle : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
-    // Input States
-    void Input_Player(void);
-    void Input_AI(void);
-
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(Paddle);
+    RSDK_DECLARE(Ball);
 };
 } // namespace GameLogic

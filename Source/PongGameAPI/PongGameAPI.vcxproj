@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\GameAPI\CPP\GameAPI\Game.cpp" />
+    <ClCompile Include="Objects\Pong\Ball.cpp" />
     <ClCompile Include="Objects\Pong\Paddle.cpp" />
     <ClCompile Include="PongGameAPI.cpp" />
   </ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="..\GameAPI\CPP\GameAPI\Game.hpp" />
     <ClInclude Include="..\GameAPI\CPP\GameAPI\GameObjects.hpp" />
     <ClInclude Include="..\GameAPI\CPP\GameAPI\GameVariables.hpp" />
+    <ClInclude Include="Objects\Pong\Ball.hpp" />
     <ClInclude Include="Objects\Pong\Paddle.hpp" />
     <ClInclude Include="PongGameAPI.hpp" />
   </ItemGroup>
