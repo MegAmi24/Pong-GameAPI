@@ -11,6 +11,9 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{9ea60711-b902-46e4-a0fd-554f746f5f71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Objects\Pong">
+      <UniqueIdentifier>{5bf6db29-93cf-4f56-a4d3-15c1eeb2cd95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GameAPI\CPP\GameAPI\Game.cpp">
@@ -18,6 +21,9 @@
     </ClCompile>
     <ClCompile Include="PongGameAPI.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Pong\Paddle.cpp">
+      <Filter>Source Files\Objects\Pong</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +38,9 @@
     </ClInclude>
     <ClInclude Include="PongGameAPI.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Pong\Paddle.hpp">
+      <Filter>Source Files\Objects\Pong</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

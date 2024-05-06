@@ -54,5 +54,5 @@ A: Of course! The reason I made this is because I've seen several people ask how
 
 # Special Thanks
 * [Rubberduckycooly](https://github.com/Rubberduckycooly) and [st×tic](https://github.com/stxticOVFL) for [GameAPI](https://github.com/Rubberduckycooly/GameAPI).
-* [skyelineee](https://github.com/skyelineee) for creating [Sonic 2 Mania](https://github.com/skyelineee/Sonic-2-Mania-Development), a GameAPI project that I occasionally looked at for reference.
+* [skyelineee](https://github.com/skyelineee) for creating [Sonic 2 Mania](https://github.com/skyelineee/Sonic-2-Mania-Development), a GameAPI project that I occasionally looked at for reference for C++ GameAPI.
 * Everyone in the [Retro Engine Modding Server](https://dc.railgun.works/retroengine) for the support!

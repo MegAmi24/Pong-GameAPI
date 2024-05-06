@@ -2,6 +2,13 @@
 
 #include "GameAPI/Game.hpp"
 
+// Enums
+
+enum GameModes {
+    MODE_VSAI,
+    MODE_2PLAYER,
+};
+
 // Global Variables
 
 // forward declare
