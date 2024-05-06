@@ -4,7 +4,7 @@ A simple Pong clone made to demonstrate the use of [GameAPI](https://github.com/
 Currently, there isn't much more to the game than endlessly playing against a basic AI, although I do plan to add a few extra features, such as a two-player mode.
 
 # How to build
-This repository assumes you are already familiar with [the building process for the RSDKv5(U) Decompilation](https://github.com/Rubberduckycooly/RSDKv5-Decompilation#how-to-build).
+This building guide assumes you are already familiar with [the building process for the RSDKv5(U) Decompilation](https://github.com/Rubberduckycooly/RSDKv5-Decompilation#how-to-build).
 
 ## Get the source code
 Clone the repo **recursively**, using:
@@ -49,7 +49,7 @@ After adding the symlink, build the RSDKv5(U) decompilation in Android Studio.
 A: Submit an issue in the issues tab and I might take a look into it.
 
 ### Q: I have a suggestion/feature request!
-A: Unfortunately, I will most likely not implement it. This project isn't about creating the best version of Pong moreso than it is a demonstration of GameAPI as described at the beginning of this file.
+A: Unfortunately, I will most likely not implement it. Although I do want to add a few things to this game, I still want it to be basic overall. The main focus of this project is demonstrating GameAPI as described above.
 
 ### Q: Can I use this as a template for my own GameAPI project?
 A: Of course! The reason I made this is because I've seen several people ask how to set up a standalone RSDK game, so hopefully this should help with just that. Just don't go doing anything illegal!

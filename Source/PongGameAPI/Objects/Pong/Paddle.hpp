@@ -40,7 +40,6 @@ struct Paddle : RSDK::GameObject::Entity {
     bool32 up;
     bool32 down;
     int32 aiTimer;
-    int8 aiDirection;
 
     // ==============================
     // EVENTS
