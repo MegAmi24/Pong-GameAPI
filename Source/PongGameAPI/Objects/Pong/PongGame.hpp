@@ -1,14 +1,14 @@
 #pragma once
 
 #include "PongGameAPI.hpp"
+#include "Paddle.hpp"
 
-#define BALL_RADIUS    (8)
-#define BALL_MOVESPEED (3)
+#define PONGGAME_WINSCORE (5)
 
 namespace GameLogic
 {
 
-struct Ball : RSDK::GameObject::Entity {
+struct PongGame : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -23,12 +23,14 @@ struct Ball : RSDK::GameObject::Entity {
     // ==============================
 
     struct Static : RSDK::GameObject::Static {
-        RSDK::Hitbox hitbox;
+        bool32 roundStarted;
+        RSDK::SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    RSDK::Animator animator;
 
     // ==============================
     // EVENTS
@@ -55,10 +57,13 @@ struct Ball : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
+    static void HandleGoal(Paddle *winner);
+    static void ResetField(Paddle *winner);
+
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(Ball);
+    RSDK_DECLARE(PongGame);
 };
 } // namespace GameLogic

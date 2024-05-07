@@ -6,6 +6,7 @@
 
 #include "Ball.hpp"
 #include "Paddle.hpp"
+#include "PongGame.hpp"
 
 using namespace RSDK;
 
@@ -15,8 +16,10 @@ RSDK_REGISTER_OBJECT(Ball);
 
 void Ball::Update(void)
 {
-    this->position.x += this->velocity.x;
-    this->position.y += this->velocity.y;
+    if (PongGame::sVars->roundStarted) {
+        this->position.x += this->velocity.x;
+        this->position.y += this->velocity.y;
+    }
 
     // Handle Paddle collision
     foreach_active(Paddle, paddle)
@@ -63,8 +66,10 @@ void Ball::Update(void)
     }
 
     // Handle goals
-    if (FROM_FIXED(this->position.x) + BALL_RADIUS * 2 < 0 || FROM_FIXED(this->position.x) - BALL_RADIUS * 2 > screenInfo->size.x)
-        Stage::LoadScene();
+    if (FROM_FIXED(this->position.x) + BALL_RADIUS * 2 < 0)
+        PongGame::HandleGoal(RSDK_GET_ENTITY(SLOT_PLAYER2, Paddle));
+    else if (FROM_FIXED(this->position.x) - BALL_RADIUS * 2 > screenInfo->size.x)
+        PongGame::HandleGoal(RSDK_GET_ENTITY(SLOT_PLAYER1, Paddle));
 }
 
 void Ball::LateUpdate(void) {}
@@ -80,8 +85,8 @@ void Ball::Create(void *data)
         this->drawGroup     = 2;
         this->position.x    = TO_FIXED(screenInfo->center.x);
         this->position.y    = TO_FIXED(screenInfo->center.y);
-        this->velocity.x    = TO_FIXED(BALL_MOVESPEED);
-        this->velocity.y    = TO_FIXED(BALL_MOVESPEED);
+        this->velocity.x    = TO_FIXED(BALL_MOVESPEED * (Math::Rand(0, 1) ? -1 : 1));
+        this->velocity.y    = TO_FIXED(BALL_MOVESPEED * (Math::Rand(0, 1) ? -1 : 1));
     }
 }
 
@@ -90,7 +95,7 @@ void Ball::StageLoad(void)
     // Copy Ball to slot 2
     foreach_all(Ball, spawn)
     {
-        Ball *ball = RSDK_GET_ENTITY(2, Ball);
+        Ball *ball = RSDK_GET_ENTITY(SLOT_BALL, Ball);
         spawn->Copy(ball, true);
     }
 

@@ -173,7 +173,9 @@
   <ItemGroup>
     <ClCompile Include="..\GameAPI\CPP\GameAPI\Game.cpp" />
     <ClCompile Include="Objects\Pong\Ball.cpp" />
+    <ClCompile Include="Objects\Pong\HUD.cpp" />
     <ClCompile Include="Objects\Pong\Paddle.cpp" />
+    <ClCompile Include="Objects\Pong\PongGame.cpp" />
     <ClCompile Include="PongGameAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +183,9 @@
     <ClInclude Include="..\GameAPI\CPP\GameAPI\GameObjects.hpp" />
     <ClInclude Include="..\GameAPI\CPP\GameAPI\GameVariables.hpp" />
     <ClInclude Include="Objects\Pong\Ball.hpp" />
+    <ClInclude Include="Objects\Pong\HUD.hpp" />
     <ClInclude Include="Objects\Pong\Paddle.hpp" />
+    <ClInclude Include="Objects\Pong\PongGame.hpp" />
     <ClInclude Include="PongGameAPI.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

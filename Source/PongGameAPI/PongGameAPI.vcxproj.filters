@@ -28,6 +28,12 @@
     <ClCompile Include="Objects\Pong\Ball.cpp">
       <Filter>Source Files\Objects\Pong</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Pong\PongGame.cpp">
+      <Filter>Source Files\Objects\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Pong\HUD.cpp">
+      <Filter>Source Files\Objects\Pong</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GameAPI\CPP\GameAPI\Game.hpp">
@@ -46,6 +52,12 @@
       <Filter>Source Files\Objects\Pong</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Pong\Ball.hpp">
+      <Filter>Source Files\Objects\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Pong\PongGame.hpp">
+      <Filter>Source Files\Objects\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Pong\HUD.hpp">
       <Filter>Source Files\Objects\Pong</Filter>
     </ClInclude>
   </ItemGroup>

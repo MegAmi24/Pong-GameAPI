@@ -2,13 +2,10 @@
 
 #include "PongGameAPI.hpp"
 
-#define BALL_RADIUS    (8)
-#define BALL_MOVESPEED (3)
-
 namespace GameLogic
 {
 
-struct Ball : RSDK::GameObject::Entity {
+struct HUD : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -23,12 +20,13 @@ struct Ball : RSDK::GameObject::Entity {
     // ==============================
 
     struct Static : RSDK::GameObject::Static {
-        RSDK::Hitbox hitbox;
+        RSDK::SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    RSDK::Animator animator;
 
     // ==============================
     // EVENTS
@@ -59,6 +57,6 @@ struct Ball : RSDK::GameObject::Entity {
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(Ball);
+    RSDK_DECLARE(HUD);
 };
 } // namespace GameLogic

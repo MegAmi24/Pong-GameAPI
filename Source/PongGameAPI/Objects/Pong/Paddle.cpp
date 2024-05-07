@@ -6,6 +6,7 @@
 
 #include "Paddle.hpp"
 #include "Ball.hpp"
+#include "PongGame.hpp"
 
 using namespace RSDK;
 
@@ -46,35 +47,36 @@ void Paddle::Create(void *data)
         this->drawGroup    = 2;
         this->playerID     = this->Slot();
         this->controllerID = this->playerID + 1;
-        if (this->playerID == 0) {
+        if (this->playerID == SLOT_PLAYER1) {
             this->isAI        = false;
             this->paddleColor = 0xFF0000;
-            this->position.x  = TO_FIXED_F(72);
+            this->position.x  = TO_FIXED(72);
         }
         else {
             this->isAI        = globals->gameMode == MODE_VSAI;
             this->paddleColor = 0x0000FF;
-            this->position.x  = TO_FIXED_F(screenInfo->size.x - 72);
+            this->position.x  = TO_FIXED(screenInfo->size.x - 72);
         }
-        this->position.y = TO_FIXED_F(screenInfo->center.y);
+        this->position.y = TO_FIXED(screenInfo->center.y);
         this->stateInput.Set(this->isAI ? &Paddle::Input_AI : &Paddle::Input_Player);
         this->originPos = this->position;
+        if (this->isAI)
+            this->aiTimer = 0;
     }
 }
 
 void Paddle::StageLoad(void)
 {
     // Copy Paddle objects to the beginning of the entity list
-    int32 slotID = 0;
-    foreach_all(Paddle, spawn)
+    int32 slotID = SLOT_PLAYER1;
+    foreach_all(Paddle, paddle)
     {
-        if (slotID < 2) {
-            Paddle *paddle = RSDK_GET_ENTITY(slotID, Paddle);
-            spawn->Copy(paddle, true);
+        if (slotID < SLOT_PLAYER2 + 1) {
+            paddle->Copy(RSDK_GET_ENTITY(slotID, Paddle), true);
             slotID++;
         }
         else
-            spawn->Destroy(); // There should only be 2 paddles
+            paddle->Destroy(); // There should only be 2 paddles
     }
 
     sVars->hitbox.left   = -(PADDLE_WIDTH / 2);
@@ -89,35 +91,44 @@ void Paddle::Input_Player(void)
         ControllerState *controller = &controllerInfo[this->controllerID];
         AnalogState *stick          = &analogStickInfoL[this->controllerID];
 
-        this->up    = controller->keyUp.down;
-        this->down  = controller->keyDown.down;
+        if (!PongGame::sVars->roundStarted)
+            PongGame::sVars->roundStarted |= controller->keyUp.press | controller->keyDown.press | stick->keyUp.press | stick->keyDown.press;
+        else {
+            this->up   = controller->keyUp.down;
+            this->down = controller->keyDown.down;
 
-        this->up |= stick->keyUp.down;
-        this->down |= stick->keyDown.down;
+            this->up |= stick->keyUp.down;
+            this->down |= stick->keyDown.down;
 
-        this->up |= stick->vDelta > 0.3;
-        this->down |= stick->vDelta < -0.3;
+            this->up |= stick->vDelta > 0.3;
+            this->down |= stick->vDelta < -0.3;
 
-        if (this->up && this->down) {
-            this->up  = false;
-            this->down = false;
+            if (this->up && this->down) {
+                this->up   = false;
+                this->down = false;
+            }
         }
 
-        if (controller->keyStart.press && sceneInfo->state == ENGINESTATE_REGULAR) {
-            // Pause
+        if (controller->keyStart.press) {
+            RSDK_GET_ENTITY(SLOT_PONGGAME, PongGame)->animator.frameID = 0;
+            Stage::SetEngineState(ENGINESTATE_FROZEN);
+            controller->keyStart.press = false;
         }
     }
 }
 
 void Paddle::Input_AI(void)
 {
+    if (!PongGame::sVars->roundStarted)
+        return;
+
     if (--this->aiTimer <= 0) {
         if (this->up || this->down) {
             this->up   = false;
             this->down = false;
         }
         else {
-            Ball *ball = RSDK_GET_ENTITY(2, Ball);
+            Ball *ball = RSDK_GET_ENTITY(SLOT_BALL, Ball);
             bool32 checkPos = this->position.y < ball->position.y;
             if (this->position.y == ball->position.y)
                 checkPos = ball->velocity.y > 0;

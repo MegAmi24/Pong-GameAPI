@@ -9,6 +9,14 @@ enum GameModes {
     MODE_2PLAYER,
 };
 
+enum EntitySlots {
+    SLOT_PLAYER1,
+    SLOT_PLAYER2,
+    SLOT_BALL,
+    SLOT_HUD,
+    SLOT_PONGGAME,
+};
+
 // Global Variables
 
 // forward declare
