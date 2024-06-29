@@ -1,10 +1,10 @@
 # Pong GameAPI
-A simple Pong clone made to demonstrate the use of [GameAPI](https://github.com/Rubberduckycooly/GameAPI) for creating standalone games in the Retro Engine. This project also serves as a template for anyone looking to make their own games.
+A simple Pong clone made to demonstrate the use of [GameAPI](https://github.com/RSDKModding/RSDKv5-GameAPI) for creating standalone games in the Retro Engine. This project also serves as a template for anyone looking to make their own games.
 
 Currently, there isn't much more to the game than endlessly playing against a basic AI, although I do plan to add a few extra features, such as a two-player mode.
 
 # How to build
-This building guide assumes you are already familiar with [the building process for the RSDKv5(U) Decompilation](https://github.com/Rubberduckycooly/RSDKv5-Decompilation#how-to-build).
+This building guide assumes you are already familiar with [the building process for the RSDKv5(U) Decompilation](https://github.com/RSDKModding/RSDKv5-Decompilation#how-to-build).
 
 ## Get the source code
 Clone the repo **recursively**, using:
@@ -36,7 +36,7 @@ The following CMake arguments are available when compiling:
 Simply open the solution and build the project. Make sure that the architecture, engine revision, and mod loader version match with the target engine binary.
 
 ### Building for Android
-After [setting up the RSDKv5(U) decompilation for building](https://github.com/Rubberduckycooly/RSDKv5-Decompilation#how-to-build), you will need to add a symbolic link for the directory to the Pong GameAPI repository so that the game will be built as part of the APK.
+After [setting up the RSDKv5(U) decompilation for building](https://github.com/RSDKModding/RSDKv5-Decompilation#how-to-build), you will need to add a symbolic link for the directory to the Pong GameAPI repository so that the game will be built as part of the APK.
 To add the symlink, write the appropriate command in `[RSDKv5-decompilation-root]/android/app/jni`:
   * Windows: `mklink /d Game "[path-to-pong-repo]"`
   * Linux: `ln -s "[path-to-pong-repo]" Game`
@@ -55,6 +55,6 @@ A: Unfortunately, I will most likely not implement it. Although I do want to add
 A: Of course! The reason I made this is because I've seen several people ask how to set up a standalone RSDK game, so hopefully this should help with just that. Just don't go doing anything illegal!
 
 # Special Thanks
-* [Rubberduckycooly](https://github.com/Rubberduckycooly) and [st×tic](https://github.com/stxticOVFL) for [GameAPI](https://github.com/Rubberduckycooly/GameAPI).
+* [Rubberduckycooly](https://github.com/Rubberduckycooly) and [st×tic](https://github.com/stxticOVFL) for [GameAPI](https://github.com/RSDKModding/RSDKv5-GameAPI).
 * [skyelineee](https://github.com/skyelineee) for creating [Sonic 2 Mania](https://github.com/skyelineee/Sonic-2-Mania-Development), a GameAPI project that I occasionally looked at for reference for C++ GameAPI.
 * Everyone in the [Retro Engine Modding Server](https://dc.railgun.works/retroengine) for the support!
